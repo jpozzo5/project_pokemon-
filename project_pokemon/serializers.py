@@ -31,3 +31,44 @@ class PokemonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pokemon
         fields = '__all__'
+
+#-----------------------------------------------------------------------------
+class RegionSerializer(serializers.ModelSerializer):
+    location = serializers.StringRelatedField(many=True, read_only=True)
+    class Meta:
+        model = Region
+        fields = ('name', 'location')
+    def create(self, validated_data):
+        return Region.objects.create(**validated_data)
+
+class AreasSerializer(serializers.ModelSerializer):
+    location = serializers.StringRelatedField()
+    pokemons = serializers.StringRelatedField(many=True, read_only=True)
+    class Meta:
+        model = Areas
+        fields = ('location','name','pokemons')
+    def create(self, validated_data):
+        return Areas.objects.create(**validated_data)
+
+
+class LocationSerializer(serializers.ModelSerializer):
+    sprites = SpritesSerializer(many=True, read_only=True)
+    areas = serializers.SerializerMethodField()
+
+
+    def get_areas(self, obj):
+        
+        
+        for c in obj.areas_set.all():
+            ctx = { 'id':c.id,
+                    'name':c.name,
+                    'pokemons_count':len(c.pokemons.all()),
+                    'location':c.location.id
+            }
+            return ctx
+
+    class Meta:
+        model = Location
+        fields = '__all__'
+    def create(self, validated_data):
+        return Location.objects.create(**validated_data)

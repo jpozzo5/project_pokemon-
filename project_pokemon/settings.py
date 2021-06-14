@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'vx(t0=14uf2%wp_l+6pxo0&m=_(^akeznrn6=#p0m$1bi$cn3q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*','192.168.1.107','localhost']
 # Application definition
 INSTALLED_APPS = [
     'PokemonApp',

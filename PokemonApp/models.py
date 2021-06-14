@@ -75,7 +75,6 @@ class Sprites(models.Model):
     front_shiny_female = models.URLField("front shiny female", 
         max_length=300, 
         db_index=True, 
-  
         blank=True, null=True
     )
 
@@ -107,18 +106,22 @@ class Location(models.Model):
     name = models.CharField('name', max_length=30)
     #region = models.ForeignKey(Region, on_delete=models.CASCADE)
     #areas = models.ManyToManyField(Areas, related_name='Areas')
+    def __str__(self):
+        return f'{self.name}'
+
 
 
 class Areas(models.Model):
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     name = models.CharField('name', max_length=20)
     pokemons = models.ManyToManyField(Pokemon, related_name='Pokemon')
+
     
 
 
 class Region(models.Model):
     name = models.CharField('name', max_length=30)
-    areas = models.ManyToManyField(Location, related_name='Location')
+    location = models.ManyToManyField(Location, related_name='Location')
 
 
 

@@ -97,10 +97,8 @@ class Command(BaseCommand):
                     pokemon_new.stats.add(int(i.id))
 
             type = self.get_or_create_types(data['types']) 
-            print(type)
             for ty in type:
                 for i in ty:
-
                     print(i)
                     if not pokemon_new.types.filter(pk =int(i.id)):
                         pokemon_new.types.add(int(i.id))
