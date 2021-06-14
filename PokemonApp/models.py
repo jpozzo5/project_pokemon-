@@ -103,9 +103,7 @@ class Pokemon(models.Model):
 
 
 class Location(models.Model):
-    name = models.CharField('name', max_length=30)
-    #region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    #areas = models.ManyToManyField(Areas, related_name='Areas')
+    name = models.CharField('name', max_length=40)
     def __str__(self):
         return f'{self.name}'
 
@@ -117,8 +115,6 @@ class Areas(models.Model):
     pokemons = models.ManyToManyField(Pokemon, related_name='Pokemon')
 
     
-
-
 class Region(models.Model):
     name = models.CharField('name', max_length=30)
     location = models.ManyToManyField(Location, related_name='Location')
