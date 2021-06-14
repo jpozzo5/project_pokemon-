@@ -111,7 +111,7 @@ class Location(models.Model):
 
 class Areas(models.Model):
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
-    name = models.CharField('name', max_length=20)
+    name = models.CharField('name', max_length = 50)
     pokemons = models.ManyToManyField(Pokemon, related_name='Pokemon')
 
     

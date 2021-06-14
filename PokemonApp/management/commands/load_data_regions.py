@@ -15,24 +15,15 @@ class Command(BaseCommand):
     def handle(self, *args, **options):    
         ctx = self.load_text('regions.json')
         i = 0
-        for region in ctx['data']:
-            print(Region.objects.filter(name = region['name']))
-            # print(region['name'])
-
-            # print("------------------*---")
-            # print(region['locations'])
-
-           
+        for region in ctx['data']:           
             if not Region.objects.filter(name = region['name']):
                 region_obj = Region.objects.create(name = region['name'])
                 region_obj2 = Region.objects.get(pk = region_obj.id)
                 for location in region['locations']:
-                    location_obj = Location.objects.get(name = location)
-                    
-        
+                    location_obj = Location.objects.get(name = location)        
                     if location_obj:
                         region_obj2.location.add(location_obj.id)
-                        print(location)
+
 
 
 
