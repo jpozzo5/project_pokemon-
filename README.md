@@ -15,3 +15,4 @@ Autor:Jesus pozzo
 8. Importar Pokemones, acceder a la ruta principal del proyecto  y ejecutar el comando `python manage.py load_data_pokemon`
 
 
+Finalmente la informacion ya ha sido importada ya podremos utilizar nuestra api Rest para Consultar toda la mayor informacion de los pokemones!!

@@ -40,6 +40,13 @@ class RegionSerializer(serializers.ModelSerializer):
         fields = ('name', 'location')
     def create(self, validated_data):
         return Region.objects.create(**validated_data)
+class RegionSerializer2(serializers.ModelSerializer):
+    location = serializers.StringRelatedField(many=True, read_only=True)
+    class Meta:
+        model = Region
+        fields = ('name', 'location')
+    def create(self, validated_data):
+        return Region.objects.create(**validated_data)
 
 class AreasSerializer(serializers.ModelSerializer):
     location = serializers.StringRelatedField()
@@ -54,11 +61,7 @@ class AreasSerializer(serializers.ModelSerializer):
 class LocationSerializer(serializers.ModelSerializer):
     sprites = SpritesSerializer(many=True, read_only=True)
     areas = serializers.SerializerMethodField()
-
-
     def get_areas(self, obj):
-        
-        
         for c in obj.areas_set.all():
             ctx = { 'id':c.id,
                     'name':c.name,

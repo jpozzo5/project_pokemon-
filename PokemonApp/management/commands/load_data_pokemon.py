@@ -108,7 +108,6 @@ class Command(BaseCommand):
     #This is the main method, which calls the secondary methods to perform the data load.
     def handle(self, *args, **options):
         for file_name in _FILES:     
-            #try:    
             ctx =self.load_text(file_name)
             if file_name == 'pokemons.json':
                 self.loads_pokemons(ctx)
