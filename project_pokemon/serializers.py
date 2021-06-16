@@ -105,6 +105,7 @@ class CapturePSerializer(serializers.ModelSerializer):
 
 
 class CapturePosSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = PokemonCaptured
         fields = ('specie','nick_name','is_party_member',)
