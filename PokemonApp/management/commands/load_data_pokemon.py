@@ -41,7 +41,7 @@ class Command(BaseCommand):
             front_shiny_female =sprites['front_shiny_female'],
         )
 
-        return Sprites.objects.filter(pk=sprites_obj.id)
+        return Sprites.objects.get(pk=sprites_obj.id)
     def get_or_create_stats(self,stats):
         stats_obj = Stats.objects
         stats_ids = [stats_obj.filter(name=st['name']) if stats_obj.filter(name=st) else \
@@ -86,9 +86,9 @@ class Command(BaseCommand):
 
             
             sprites = self.get_or_create_sprites(data['sprites'])
-            for sp in sprites:
-                if not pokemon_new.sprites.filter(pk =int(sp.id)):
-                    pokemon_new.sprites.add(int(i.id))
+            if sprites :
+                pokemon_new.sprites = sprites
+                pokemon_new.save()
             
             stats = self.get_or_create_stats(data['stats']) 
             

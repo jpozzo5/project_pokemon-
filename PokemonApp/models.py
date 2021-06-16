@@ -130,7 +130,7 @@ class Region(models.Model):
 
 
 class PokemonCaptured(models.Model):
-    # user = models.OneToOneField(settings.AUTH_USER_MODEL,
+    # nick_name = models.OneToOneField(settings.AUTH_USER_MODEL,
     #                             on_delete=models.CASCADE)
     nick_name = models.CharField('Nick Name', max_length=40)
     specie = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
@@ -138,3 +138,5 @@ class PokemonCaptured(models.Model):
     
     def __str__(self):
         return f'{self.nick_name}'
+
+

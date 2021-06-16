@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'project_pokemon.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'pokemon1',
+        'NAME': 'pokemon',
         'USER': 'jesus',
         'PASSWORD':'pozzo*',
         'HOST': 'localhost',
