@@ -15,4 +15,7 @@ urlpatterns = [
     url(r'^pokemons/$', PokemonsListRestView.as_view(),name ="pokemon_list"),
     url(r'^pokemons/(?P<pk>\d+)', PokemonsRestView.as_view(),name ="pokemon_id"),
     url(r'^pokemons/own/$', PokemonsCapturedRestView.as_view(),name ="own"),
+    url(r'^test/$', TestRestView.as_view(),name ="test"),
+
+    
 ]

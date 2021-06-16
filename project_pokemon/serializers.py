@@ -24,8 +24,7 @@ class PokemonSerializer(serializers.ModelSerializer):
     height = serializers.FloatField()
     moves = serializers.StringRelatedField(many=True, read_only=True)
     name = serializers.StringRelatedField()
-    #sprites = serializers.StringRelatedField(many=True, read_only=True)
-    sprites = SpritesSerializer(many=True, read_only=True)
+    sprites = SpritesSerializer()
     stats =  StatsSerializer(many=True)
     types = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
@@ -102,4 +101,17 @@ class CapturePSerializer(serializers.ModelSerializer):
         model = PokemonCaptured
         fields = ('id','nick_name','is_party_member','specie')
     def create(self, validated_data):
+        return PokemonCaptured.objects.create(**validated_data)
+
+
+class CapturePosSerializer(serializers.ModelSerializer):
+    #specie = serializers.SerializerMethodField()
+    # def get_specie(self, obj):
+    #     return obj.specie.id
+    class Meta:
+        model = PokemonCaptured
+        fields = ('specie','nick_name','is_party_member',)
+    def create(self, validated_data):
+        print("DAta en el create")
+        print(validated_data)
         return PokemonCaptured.objects.create(**validated_data)

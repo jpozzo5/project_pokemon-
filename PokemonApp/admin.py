@@ -4,7 +4,7 @@ from .models import *
 
 @admin.register(PokemonCaptured)
 class PokemonCapturedAdmin(admin.ModelAdmin):
-    list_display= ['user']
+    list_display= ['nick_name']
 
 @admin.register(Abilities)
 class AbilitiesAdmin(admin.ModelAdmin):
