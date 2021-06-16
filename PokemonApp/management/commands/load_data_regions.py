@@ -20,9 +20,10 @@ class Command(BaseCommand):
                 region_obj = Region.objects.create(name = region['name'])
                 region_obj2 = Region.objects.get(pk = region_obj.id)
                 for location in region['locations']:
-                    location_obj = Location.objects.get(name = location)        
-                    if location_obj:
-                        region_obj2.location.add(location_obj.id)
+                    location_obj = Location.objects.filter(name = location)        
+                    if location_obj.exists():
+                        for location in location_obj:
+                            region_obj2.location.add(location.id)
 
 
 

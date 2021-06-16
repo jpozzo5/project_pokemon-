@@ -1,3 +1,4 @@
+from typing import Type
 from django.core.management import BaseCommand
 from PokemonApp.models import *
 import os
@@ -20,14 +21,29 @@ class Command(BaseCommand):
     
     def get_or_create_abilities(self,abilities):
         abilities_obj = Abilities.objects
-        abilities_ids = [abilities_obj.filter(name=ab) if abilities_obj.filter(name=ab)else \
-             abilities_obj.create(name=ab) for ab in abilities ]
+        abilities_ids = []
+        for ab in abilities :
+            if abilities_obj.filter(name=ab):
+                for i in abilities_obj.filter(name=ab):
+                    abilities_ids.append(i)
+            else:
+                abilities_obj.create(name=ab)
+                for i in abilities_obj.filter(name=ab):
+                    abilities_ids.append(i)
+
         return abilities_ids
 
     def get_or_create_moves(self,moves):
         moves_obj = Moves.objects
-        moves_ids = [moves_obj.filter(name=mv) if moves_obj.filter(name=mv) else \
-             moves_obj.create(name=mv) for mv in moves ]
+        moves_ids = []
+        for mv in moves :
+            if moves_obj.filter(name=mv):
+                for i in moves_obj.filter(name=mv):
+                    moves_ids.append(i)
+            else:
+                moves_obj.create(name=mv)
+                for i in moves_obj.filter(name=mv):
+                    moves_ids.append(i)
         return moves_ids   
 
     def get_or_create_sprites(self,sprites):
@@ -39,6 +55,7 @@ class Command(BaseCommand):
             front_female=sprites['front_female'],
             front_shiny=sprites['front_shiny'],
             front_shiny_female =sprites['front_shiny_female'],
+            front_default =  sprites['front_default']
         )
 
         return Sprites.objects.get(pk=sprites_obj.id)
@@ -51,16 +68,23 @@ class Command(BaseCommand):
     
     def get_or_create_types(self,types):
         type_obj = Types.objects
-        abilities_ids = [type_obj.filter(name=tp) if type_obj.filter(name=tp) else \
-             type_obj.create(name=tp) for tp in types ]
-        return abilities_ids
+        types_ids = []
+        for tp in types :
+            if type_obj.filter(name=tp):
+                for i in type_obj.filter(name=tp):
+                    types_ids.append(i)
+            else:
+                type_obj.create(name=tp)
+                for i in type_obj.filter(name=tp):
+                    types_ids.append(i)
+        return types_ids
 
 
     def loads_pokemons(self,ctx):
         pokemon_obj = Pokemon.objects
         for data in ctx['data']:
             #we create the pokemon first with the basic attributes
-            
+            sprites = self.get_or_create_sprites(data['sprites'])
             pokemon_new = pokemon_obj.create(
                             capture_rate = data['capture_rate'],
                             color = data['color'],
@@ -68,42 +92,32 @@ class Command(BaseCommand):
                             height = data['height'],
                             name= data['name'],
                             weight= data['weight'],
+                            sprites = sprites,
                             )
             pokemon_new = pokemon_obj.get(pk = pokemon_new.id)
 
             abilities = self.get_or_create_abilities(data['abilities'])
 
-            for ab in abilities:
-                for i in ab:
-                    if not pokemon_new.abilities.filter(pk =int(i.id)):
-                        pokemon_new.abilities.add(int(i.id))
+            if abilities:
+                for ab in abilities:
+                    if not pokemon_new.abilities.filter(pk =ab.id):
+                        pokemon_new.abilities.add(ab.id)
 
             moves = self.get_or_create_moves(data['moves'])
-            for mv in moves:
-                for i in mv:
-                    if not pokemon_new.moves.filter(pk =int(i.id)):
-                        pokemon_new.moves.add(int(i.id))
+            if moves:
+                for mv in moves:
+                    if not pokemon_new.moves.filter(pk =mv.id):
+                        pokemon_new.moves.add(mv.id)
 
-            
-            sprites = self.get_or_create_sprites(data['sprites'])
-            if sprites :
-                pokemon_new.sprites = sprites
-                pokemon_new.save()
-            
             stats = self.get_or_create_stats(data['stats']) 
-            
             for st in stats:
-                if not pokemon_new.stats.filter(pk =int(st.id)):
-                    pokemon_new.stats.add(int(i.id))
+                if not pokemon_new.stats.filter(pk =int(st.pk)):
+                    pokemon_new.stats.add(int(st.pk))
 
             type = self.get_or_create_types(data['types']) 
             for ty in type:
-                for i in ty:
-                    print(i)
-                    if not pokemon_new.types.filter(pk =int(i.id)):
-                        pokemon_new.types.add(int(i.id))
-
-
+                if not pokemon_new.types.filter(pk =ty.id):
+                    pokemon_new.types.add(ty.id)
         return
     #This is the main method, which calls the secondary methods to perform the data load.
     def handle(self, *args, **options):
