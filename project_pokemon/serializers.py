@@ -105,13 +105,8 @@ class CapturePSerializer(serializers.ModelSerializer):
 
 
 class CapturePosSerializer(serializers.ModelSerializer):
-    #specie = serializers.SerializerMethodField()
-    # def get_specie(self, obj):
-    #     return obj.specie.id
     class Meta:
         model = PokemonCaptured
         fields = ('specie','nick_name','is_party_member',)
     def create(self, validated_data):
-        print("DAta en el create")
-        print(validated_data)
         return PokemonCaptured.objects.create(**validated_data)
