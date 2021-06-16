@@ -2,7 +2,9 @@ from django.contrib import admin
 
 from .models import *
 
-
+@admin.register(PokemonCaptured)
+class PokemonCapturedAdmin(admin.ModelAdmin):
+    list_display= ['user']
 
 @admin.register(Abilities)
 class AbilitiesAdmin(admin.ModelAdmin):

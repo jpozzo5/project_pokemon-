@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.conf import settings
 
 #-------------------------------------------Models for Pokemons
 
@@ -77,6 +77,8 @@ class Sprites(models.Model):
         db_index=True, 
         blank=True, null=True
     )
+    def __str__(self):
+        return f'Sprites for:{self.pokemon_set.name}'
 
 
 
@@ -90,7 +92,7 @@ class Pokemon(models.Model):
     height = models.FloatField('Height',null=True)
     moves = models.ManyToManyField(Moves, related_name='Moves')
     name = models.CharField('Name', max_length=30)
-    sprites = models.ManyToManyField(Sprites, related_name='Sprites')
+    sprites = models.ForeignKey(Sprites ,on_delete=models.CASCADE)
     stats = models.ManyToManyField(Stats, related_name='Stats')
     types = models.ManyToManyField(Types, related_name='Types')
     weight = models.FloatField('Weight',null=True)
@@ -127,3 +129,12 @@ class Region(models.Model):
 #-------------EndModelsForRegions
 
 
+class PokemonCaptured(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE)
+    nick_name = models.CharField('Nick Name', max_length=40)
+    specie = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
+    is_party_member = models.BooleanField()
+    
+    def __str__(self):
+        return f'Pokemon Capture{self.user.username}'

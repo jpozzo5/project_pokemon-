@@ -40,6 +40,7 @@ class RegionSerializer(serializers.ModelSerializer):
         fields = ('name', 'location')
     def create(self, validated_data):
         return Region.objects.create(**validated_data)
+
 class RegionSerializer2(serializers.ModelSerializer):
     location = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
@@ -75,3 +76,30 @@ class LocationSerializer(serializers.ModelSerializer):
         fields = '__all__'
     def create(self, validated_data):
         return Location.objects.create(**validated_data)
+
+
+
+
+class CapturePSerializer(serializers.ModelSerializer):
+    specie = serializers.SerializerMethodField()
+    def get_specie(self, obj):
+        ctx = { 'id':obj.specie.id,
+                'name':obj.specie.name,
+                'prites':{
+                    'back_shiny':obj.specie.sprites.back_shiny,
+                    'back_female':obj.specie.sprites.back_female,
+                    'front_shiny':obj.specie.sprites.front_shiny,
+                    'back_default':obj.specie.sprites.back_default,
+                    'front_female':obj.specie.sprites.front_female,
+                    'front_default':obj.specie.sprites.front_default,
+                    'back_shiny_female':obj.specie.sprites.back_shiny_female,
+                    'front_shiny_female':obj.specie.sprites.front_shiny_female,
+                }
+        }
+        return ctx
+
+    class Meta:
+        model = PokemonCaptured
+        fields = ('id','nick_name','is_party_member','specie')
+    def create(self, validated_data):
+        return PokemonCaptured.objects.create(**validated_data)
