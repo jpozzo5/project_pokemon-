@@ -25,8 +25,20 @@ class PokemonsCapturedRestView(APIView):
     def post(self, request, format=None):
         serializer = CapturePosSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+            print("entre")
+            print(request.data['is_party_member'])
+            if request.data['is_party_member'] == "true" or request.data['is_party_member'] == True or request.data['is_party_member'] == "True":
+                print("entre2")
+                pokemonsC =PokemonCaptured.objects.filter(is_party_member=True)
+                if len(pokemonsC) <=6:
+                    serializer.save()
+                    return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+                else:
+                    return Response({"Fallo al crear": "YA existe un taño de 6 miembros."})
+            else:
+                print("else")
+                serializer.save()
+                return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PokemonsCapturedEditRestView(APIView):
