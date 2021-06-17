@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^pokemons/(?P<pk>\d+)', PokemonsRestView.as_view(),name ="pokemon_id"),
     url(r'^pokemons/own/$', PokemonsCapturedRestView.as_view(),name ="own"),
     url(r'^pokemons/own/(?P<pk>\d+)$', PokemonsCapturedEditRestView.as_view(),name ="own-edit"),
-    url(r'^ /pokemons/own/swap/$', PokemonsCapturedRestView.as_view(),name ="own"),
+    #url(r'^pokemons/own/party/$', PokemonsCapturedRestView.as_view(),name ="party"),
 
     
 

@@ -30,5 +30,12 @@ DATABASES = {
 9.  Importar Areas, acceder a la ruta principal del proyecto  y ejecutar el comando `python manage.py load_data_areas`
 10. Importar Pokemones, acceder a la ruta principal del proyecto  y ejecutar el comando `python manage.py load_data_pokemon`
 
+## Servicios
+1. `pokemons/` muestra un listado de los pokemones `[GET]`.
+2. `pokemons/(?P<pk>\d+)` Muestra 1 pokemon de acuerdo a a Id `[GET]`.
+3. `pokemons/own/` Muestra Un listado de captura de pokemones y los miembros de la party  `[GET]`.
+4. `pokemons/own/` Puedes registra un pokemon capturado con un maximo de 6 miembro en la party `[POST]`.
+5. `pokemons/own/` Edita el nick_name del almacenamiento de tu pokemon `[PUT', 'PATCH']`
+6. `pokemons/own/` Elimina El pokemon de tu almacenamiento`[DELETE]`.
 
-Finalmente la informacion ya ha sido importada ya podremos utilizar nuestra api Rest para Consultar toda la mayor informacion de los pokemones!!
+
