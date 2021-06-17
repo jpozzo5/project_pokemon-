@@ -37,5 +37,8 @@ DATABASES = {
 4. `pokemons/own/` Puedes registra un pokemon capturado con un maximo de 6 miembro en la party `[POST]`.
 5. `pokemons/own/` Edita el nick_name del almacenamiento de tu pokemon `[PUT', 'PATCH']`
 6. `pokemons/own/` Elimina El pokemon de tu almacenamiento`[DELETE]`.
+7. `locations/` Este Servicio Muestra el listado de loocalizaciones `[Get]`.
+8. `regions/` Este Servicio muestra el listado de regiones `[GET]`.
+9. `areas/` Este Servicio muestra el listado de areas `[GET]`.
 
 
