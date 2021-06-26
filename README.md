@@ -4,7 +4,7 @@ Autor:Jesus pozzo
 
 ## Instalación
 
-1. Clonar este repositorio en tu equipo locas: `https://github.com/jpozzo5/project_pokemon-.git`.
+1. Clonar este repositorio en tu equipo local: `https://github.com/jpozzo5/project_pokemon-.git`.
 2. Para iniciar nuestro entorno virtual accedemos al proyecto y en la carpera `env_pokemon/Scripts` ejecutamos el comando `source active`.
 3. Para mayor informacion en la carpeta del proyecto se encuentra un archivo llamado requerements.txt el cual nos indica cuales son las dependecias utilizadas en este proyecto para instalarlas podemos utilizar el comando
 `pip install -r requirements.txt`.
